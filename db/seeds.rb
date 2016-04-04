@@ -5,11 +5,20 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Trip.destroy_all
 Location.destroy_all
+Trip.destroy_all
 
-trips_data = JSON.parse(File.read("db/trips_data.json"))
-locations_data = JSON.parse(File.read("db/locations_data.json"))
+# trips_data = JSON.parse(File.read("db/trips_data.json"))
+# locations_data = JSON.parse(File.read("db/locations_data.json"))
+#
+# trip = Trip.create!(trips_data[0])
+# trip.locations.create!(locations_data[0])
 
-trip = Trip.create!(trips_data[0])
-trip.locations.create!(locations_data[0])
+Trip.create!([
+  {"name":"Project 3",
+    "category":"Review",
+    "locations":[
+      {"name":"General Assembly Washington DC","lat":38.904877,"long":-77.036217}
+    ]
+  }
+])

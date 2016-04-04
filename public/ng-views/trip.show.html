@@ -1,6 +1,5 @@
 <h2>this is the show</h2>
 {{showVM.trip.name}}
-
-<div data-model="show({id: trip.id})">
-  {{trip.name}}
+<div data-ng-repeat="location in showVM.trip">
+  <p>{{location.name}}</p>
 </div>
