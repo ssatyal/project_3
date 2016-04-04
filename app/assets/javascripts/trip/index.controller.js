@@ -7,7 +7,7 @@
     indexControllerFunction
   ]);
 
-  function indexControllerFunction(){
+  function indexControllerFunction(FactoryFunction){
     return {}
   };
 })();

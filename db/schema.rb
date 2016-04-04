@@ -11,9 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20160404174157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "locations", force: :cascade do |t|
+    t.string  "name"
+    t.float   "lat"
+    t.float   "long"
+    t.string  "place_id"
+    t.integer "trip_id"
+  end
+
+  add_index "locations", ["trip_id"], name: "index_locations_on_trip_id", using: :btree
+
+  create_table "trips", force: :cascade do |t|
+    t.string "name"
+    t.string "category"
+  end
+
+  add_foreign_key "locations", "trips"
 end

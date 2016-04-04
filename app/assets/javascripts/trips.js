@@ -19,5 +19,11 @@
       controller: "indexCtrl",
       controllerAs: "indexViewModel"
     })
+    .state("show", {
+      url: "/:id",
+      templateUrl: "ng-views/trip.show.html",
+      controller: "showCtrl",
+      controllerAs: "showVM"
+    })
   };
 })();
