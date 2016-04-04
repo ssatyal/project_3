@@ -1,10 +1,8 @@
 class TripsController < ApplicationController
 
   def home
-    
-  end
-
-  def index
+    @places = Place.new
+    @place = @places.read
 
   end
 
