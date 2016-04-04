@@ -2,7 +2,8 @@ class TripsController < ApplicationController
 
   def home
     @places = Place.new
-    @places = @places.read
+    @all_places = @places.read
+    @place_names = @places.place_details
   end
 
 
