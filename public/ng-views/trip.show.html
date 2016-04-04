@@ -1,5 +1,5 @@
 <h2>this is the show</h2>
-{{showVM.trip.name}}
-<div data-ng-repeat="location in showVM.trip">
-  <p>{{location.name}}</p>
+<h2>{{showVM.trip.name}}</h2>
+<div data-ng-repeat="place in showVM.trip.locations">
+  <p>{{place.name}}</p>
 </div>
