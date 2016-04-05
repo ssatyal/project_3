@@ -47,4 +47,5 @@ group :development do
   gem 'figaro'
   gem 'google_places'
   gem 'pry'
+  gem "rails_12factor", group: :production
 end
