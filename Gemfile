@@ -46,4 +46,5 @@ group :development do
   gem 'httparty'
   gem 'figaro'
   gem 'google_places'
+  gem 'pry'
 end

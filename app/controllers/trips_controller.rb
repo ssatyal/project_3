@@ -1,4 +1,5 @@
 class TripsController < ApplicationController
+
   before_action do
     if params[:id]
       @trip = Trip.find(params[:id])
@@ -14,4 +15,11 @@ class TripsController < ApplicationController
   def show
     render json: @trip, status: :ok
   end
+
+  def home
+    @places = Place.new
+    @all_places = @places.read
+    @place_names = @places.place_details
+  end
+
 end
