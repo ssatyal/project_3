@@ -45,5 +45,6 @@ group :development do
   gem 'spring'
   gem 'httparty'
   gem 'figaro'
+  gem 'google_places'
   gem 'pry'
 end
