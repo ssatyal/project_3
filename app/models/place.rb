@@ -1,6 +1,6 @@
 class Place
 
-  def read
+  def self.read type == bar
       # google API which returns places within the specified radius of the given location coordinates
     url = "https://maps.googleapis.com/maps/api/place/radarsearch/json?location=51.503186,-0.126446&radius=500&type=museum&key=#{ENV["google_api_key"]}"
 
