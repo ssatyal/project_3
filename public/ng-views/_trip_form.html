@@ -1,0 +1,11 @@
+<form>
+  <input type="text" name="name" data-ng-model="trip.name" placeholder="Trip Name"/>
+  <input type="text" name="name" data-ng-model="trip.category" placeholder="Trip Category"/>
+  <div data-ng-show="formType == 'edit'">
+    <button data-ng-click="update()">Save</button>
+    <button data-ng-click="delete()">Delete</button>
+  </div>
+  <div data-ng-show="formType == 'new'">
+    <button data-ng-click="create()">Create</button>
+  </div>
+</form>
