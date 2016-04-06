@@ -6,14 +6,14 @@
   <p>{{place.name}}</p>
   <p>{{place.place_id}}</p>
 
-  <iframe
-    width="600"
-    height="450"
-    frameborder="0" style="border:0"
-    ng-src=
-    {{"https://www.google.com/maps/embed/v1/directions?key=AIzaSyAg39LEeoWxSherOtvNqnYGg24ojPJFJDM&origin=place_id:"+place.place_id+"&destination=place_id:ChIJadN45Ze3t4kRut2hxBYrjME&waypoints=place_id:ChIJ44vdnJe3t4kRSJTw3urQKFs&zoom=15"}} allowfullscreen>
-  </iframe>
 </div>
+<iframe
+width="600"
+height="450"
+frameborder="0" style="border:0"
+ng-src=
+{{tripShowVM.mapUrl}} allowfullscreen>
+</iframe>
 
 <h2>add locations</h2>
 

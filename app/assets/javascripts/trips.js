@@ -61,10 +61,14 @@
   function showCtrlFunction( Search, Trip, $stateParams, LocationFactory ){
     var showVM = this;
     showVM.trip = Trip.get({id: $stateParams.id});
+    // .$promise.then(function(trip){
+    //   showVM.mapUrl = generateMapURL(trip.locations);
+      // console.log(showVM.mapUrl);
+    // });
     showVM.search = function() {
       showVM.places = Search.query({q:showVM.query}, function(results){
         showVM.places = results;
-        console.log(results)
+        // console.log(results)
       })
     };
     showVM.location = new LocationFactory();
@@ -153,12 +157,10 @@
         }
         scope.update = function(){
           Trip.update({id: scope.trip.id}, scope.trip, function(response){
-            console.log("Success")
           })
         }
         scope.delete = function(){
           Trip.delete({id: scope.trip.id}, scope.trip, function(response){
-            console.log("Success")
           })
         }
       }
@@ -174,4 +176,23 @@
   function tripEditControllerFunction( Trip, $stateParams ) {
     this.trip = Trip.get({id: $stateParams.id});
   }
+
+  // function generateMapURL(args) {
+  //   console.log(args)
+	// var string = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAg39LEeoWxSherOtvNqnYGg24ojPJFJDM&";
+	// if (args.length ===1 ){
+	// 	return string+="origin="+args[0].place_id+"&destination="+args[0].place_id
+	// }
+	// if (args.length===2){
+	// return string+="origin="+args[0].place_id+"&destination="+args[1].place_id
+  // }
+	// var first = args.shift();
+	// var last = args.pop();
+	// var middle = args.map(function(d){
+	// 	return "&waypoints="+d;
+  //   }).join("")
+  //   console.log(string+="origin="+first+middle+"&destination="+last);
+  //   console.log(args[0].place_id)
+	// return string+="origin="+first+middle+"&destination="+last
+  // }
 })();
