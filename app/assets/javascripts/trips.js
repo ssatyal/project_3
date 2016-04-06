@@ -60,11 +60,10 @@
 
   function showCtrlFunction( Search, Trip, $stateParams, LocationFactory ){
     var showVM = this;
-    showVM.trip = Trip.get({id: $stateParams.id});
-    // .$promise.then(function(trip){
-    //   showVM.mapUrl = generateMapURL(trip.locations);
+    showVM.trip = Trip.get({id: $stateParams.id}).$promise.then(function(trip){
+      showVM.mapUrl = generateMapURL(trip.locations);
       // console.log(showVM.mapUrl);
-    // });
+    });
     showVM.search = function() {
       showVM.places = Search.query({q:showVM.query}, function(results){
         showVM.places = results;
@@ -177,22 +176,25 @@
     this.trip = Trip.get({id: $stateParams.id});
   }
 
-  // function generateMapURL(args) {
-  //   console.log(args)
-	// var string = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAg39LEeoWxSherOtvNqnYGg24ojPJFJDM&";
-	// if (args.length ===1 ){
-	// 	return string+="origin="+args[0].place_id+"&destination="+args[0].place_id
-	// }
-	// if (args.length===2){
-	// return string+="origin="+args[0].place_id+"&destination="+args[1].place_id
-  // }
-	// var first = args.shift();
-	// var last = args.pop();
-	// var middle = args.map(function(d){
-	// 	return "&waypoints="+d;
-  //   }).join("")
-  //   console.log(string+="origin="+first+middle+"&destination="+last);
-  //   console.log(args[0].place_id)
-	// return string+="origin="+first+middle+"&destination="+last
-  // }
+  function generateMapURL(args) {
+    console.log(args.length)
+	var string = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAg39LEeoWxSherOtvNqnYGg24ojPJFJDM&";
+	if (args.length === 1 ){
+    console.log("arg 1")
+    return string+="origin=place_id:"+args[0].place_id+"&destination=place_id:"+args[0].place_id
+	}
+	if (args.length === 2){
+    console.log("arg 2")
+  return string+="origin=place_id:"+args[0].place_id+"&destination=place_id:"+args[1].place_id
+  }
+	var first = args.shift();
+	var last = args.pop();
+	var middle = args.map(function(d){
+		return "&waypoints=place_id:"+d.place_id;
+    }).join("")
+    console.log("arg 3")
+    console.log(middle)
+  
+	return string+="origin=place_id:"+first.place_id+middle+"&destination=place_id:"+last.place_id
+  }
 })();

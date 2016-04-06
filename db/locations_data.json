@@ -1,3 +1,7 @@
 [
-  {"name":"General Assembly Washington DC","lat":38.904877,"long":-77.036217,"place_id":"ChIJaSGhwr-3t4kRVPDPADsjwSE"}
+  {"name":"General Assembly Washington DC","lat":38.904877,"long":-77.036217,"place_id":"ChIJaSGhwr-3t4kRVPDPADsjwSE"},
+  {"name":"Cosi","lat":38.904877,"long":-77.036217,"place_id":"ChIJie02eLu3t4kRS-cNfaKk1_Q"},
+  {"name":"Cosi","lat":38.904877,"long":-77.036217,"place_id":"ChIJGUziNpG3t4kRvTjVKBztghI"},
+  {"name":"White house","lat":38.904877,"long":-77.036217,"place_id":"ChIJ37HL3ry3t4kRv3YLbdhpWXE"},
+  {"name":"Old Ebbit","lat":38.904877,"long":-77.036217,"place_id":"ChIJgRwXf723t4kRdfqt36VafUU"}
 ]

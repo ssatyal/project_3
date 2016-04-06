@@ -1,4 +1,10 @@
 [
   {"name":"Project 3", "category":"Review"
+  },
+  {"name":"Test Trip", "category":"Test"
+  },
+  {"name":"Keiths Big Night out", "category":"Review"
+  },
+  {"name":"End of the World", "category":"Review"
   }
 ]
