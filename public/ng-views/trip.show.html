@@ -1,4 +1,5 @@
 <h2>this is the show</h2>
+<p>{{tripShowVM.trip.id}}</p>
 <h2>{{tripShowVM.trip.name}}</h2>
 <div data-ng-repeat="place in tripShowVM.trip.locations">
   <p>{{place.name}}</p>
@@ -10,9 +11,8 @@
 </form>
 
 <!-- {{ indexVM.places[0][1].name }} -->
-
 <div ng-repeat="place in tripShowVM.places[0] track by $index">
   {{ place.name }}
   {{ place.vicinity }}
-  <!-- need to add a button that will run "create()" function -->
+  <button ng-click="tripShowVM.createLocation(tripShowVM.trip.id, place.name, place.geometry.location.lat, place.geometry.location.lng, place.place_id)">Save</button>
 </div>
