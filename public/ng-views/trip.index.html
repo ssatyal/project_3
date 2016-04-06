@@ -1,6 +1,15 @@
 <h1> index file </h1>
-<div data-ng-repeat="trip in indexVM.trips">
+<div data-ng-repeat="trip in indexVM.trips" >
   <p>{{trip.name}}</p>
+  <p>"Location:"{{trip.locations[0].place_id}}</p>
+
+  <iframe
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    ng-src=
+    {{"https://www.google.com/maps/embed/v1/directions?key=AIzaSyAg39LEeoWxSherOtvNqnYGg24ojPJFJDM&origin=place_id:"+trip.locations[0].place_id+"&destination=place_id:ChIJadN45Ze3t4kRut2hxBYrjME&waypoints=place_id:ChIJ44vdnJe3t4kRSJTw3urQKFs&zoom=15"}} allowfullscreen>
+  </iframe>
 </div>
 
 <form data-ng-submit="indexVM.search()">
@@ -12,5 +21,18 @@
 <div ng-repeat="place in indexVM.places[0] track by $index">
   {{ place.name }}
   {{ place.vicinity }}
+  {{ place.place_id }}
+  {{place.geometry.location.lat}}
+  {{place.geometry.location.lng}}
   <!-- need to add a button that will run "create()" function -->
 </div>
+<!--
+<div data-ng-repeat="trip in indexVM.trips">
+  <iframe
+    width="600"
+    height="450"
+    frameborder="0" style="border:0"
+    src=
+    "https://www.google.com/maps/embed/v1/directions?key=AIzaSyAg39LEeoWxSherOtvNqnYGg24ojPJFJDM&origin=place_id:{{trip.locations[0].place_id}}&destination=place_id:ChIJadN45Ze3t4kRut2hxBYrjME&waypoints=place_id:ChIJ44vdnJe3t4kRSJTw3urQKFs&zoom=15" allowfullscreen>
+  </iframe>
+<div> -->

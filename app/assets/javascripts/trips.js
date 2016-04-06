@@ -10,6 +10,9 @@
     "$stateProvider",
     RouterFunction
   ])
+  .config(["$sceProvider", function($sceProvider){
+   $sceProvider.enabled(false);
+ }])
   .factory( "TripFactory", [
     "$resource",
     TripFactory
@@ -31,7 +34,9 @@
   ]);
 
   function showStrlFunction( TripFactory, $stateParams ){
-  this.trip = TripFactory.get({id: $stateParams.id});
+    var showVM = this;
+    showVM.trip = TripFactory.query({id: $stateParams.id});
+    console.log(showVM)
   };
 
   function indexControllerFunction( Search, Trip ){
@@ -47,7 +52,10 @@
 
   function TripFactory( $resource ){
     var Trip = $resource( "http://localhost:3000/trips/:id.json", {}, {
-      update: { method: "PUT" }
+      update: {
+        method: "PUT",
+        isArray: true
+      },
     });
     Trip.all = Trip.query();
     return Trip;
