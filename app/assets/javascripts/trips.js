@@ -64,21 +64,15 @@
         console.log(results)
       })
     };
-    showVM.location = new LocationFactory({trip_id: 3});
-    showVM.createLocation = function(){
-      showVM.location.$save();
+    showVM.location = new LocationFactory();
+    showVM.createLocation = function(trip_id, name, lat, long, place_id){
+      showVM.location.$save({trip_id: trip_id, name: name, lat: lat, long: long, place_id: place_id});
     }
   };
 
   function indexControllerFunction( Search, Trip ){
     var indexVM = this;
     indexVM.trips = Trip.all;
-    // indexVM.search = function() {
-    //   indexVM.places = Search.query({q:indexVM.query}, function(results){
-    //     indexVM.places = results;
-    //     console.log(results)
-    //   })
-    // }
   };
 
   function Trip( $resource ){
