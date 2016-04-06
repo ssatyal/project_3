@@ -10,6 +10,9 @@
     "$stateProvider",
     RouterFunction
   ])
+  .config(["$sceProvider", function($sceProvider){
+   $sceProvider.enabled(false);
+ }])
   .factory( "Trip", [
     "$resource",
     Trip
@@ -17,6 +20,10 @@
   .factory( "SearchFactory", [
     "$resource",
     SearchFactory
+  ])
+  .factory( "LocationFactory", [
+    "$resource",
+    LocationFactory
   ])
   .controller("indexCtrl", [
     "SearchFactory",
@@ -37,14 +44,23 @@
     "SearchFactory",
     "Trip",
     "$stateParams",
+    "LocationFactory",
+    "$window",
     showCtrlFunction
   ])
+  // .controller("locationNewController", [
+  //   "Trip",
+  //   "$stateParams",
+  //   "LocationFactory",
+  //   locationNewControllerFunction
+  // ])
   .directive("tripForm",[
     "Trip",
+    "$state",
     tripFormDirectiveFunction
   ]);
 
-  function showCtrlFunction( Search, Trip, $stateParams ){
+  function showCtrlFunction( Search, Trip, $stateParams, LocationFactory, $window ){
     var showVM = this;
     showVM.trip = Trip.get({id: $stateParams.id});
     showVM.search = function() {
@@ -52,23 +68,25 @@
         showVM.places = results;
         console.log(results)
       })
+    };
+    showVM.location = new LocationFactory();
+    showVM.createLocation = function(trip_id, name, lat, long, place_id){
+      showVM.location.$save({trip_id: trip_id, name: name, lat: lat, long: long, place_id: place_id},
+      $window.location.reload());
     }
   };
 
   function indexControllerFunction( Search, Trip ){
     var indexVM = this;
     indexVM.trips = Trip.all;
-    indexVM.search = function() {
-      indexVM.places = Search.query({q:indexVM.query}, function(results){
-        indexVM.places = results;
-        console.log(results)
-      })
-    }
   };
 
   function Trip( $resource ){
     var Trip = $resource( "http://localhost:3000/trips/:id.json", {}, {
-      update: { method: "PUT" }
+      update: {
+        method: "PUT",
+        isArray: true
+      },
     });
     Trip.all = Trip.query();
     return Trip;
@@ -84,6 +102,16 @@
     Search.all = Search.query()
     return Search;
   };
+
+  function LocationFactory( $resource ){
+    var Location = $resource( "http://localhost:3000/trips/:trip_id/locations/:id", {trip_id: "@trip_id"}, {
+      update: {
+        method: "PUT"
+        // isArray: true
+      }
+    });
+    return Location;
+  }
 
   function RouterFunction($stateProvider){
     $stateProvider
@@ -112,7 +140,7 @@
       controllerAs: "tripShowVM"
     })
   };
-  function tripFormDirectiveFunction(Trip){
+  function tripFormDirectiveFunction(Trip, $state){
     return{
       templateUrl: "/ng-views/_trip_form.html",
       restrict: "C",
@@ -124,11 +152,12 @@
         scope.create = function(){
           Trip.save(scope.trip, function(response){
             Trip.all.push(response);
+            console.log("trip create success:", response);
+            $state.go("tripShow", {id: response.id});
           });
         }
         scope.update = function(){
           Trip.update({id: scope.trip.id}, scope.trip, function(response){
-            console.log("Success")
           })
         }
         scope.delete = function(){
@@ -139,6 +168,9 @@
       }
     }
   }
+  // function locationNewControllerFunction( Trip, $stateParams, LocationFactory ){
+  //
+  // }
   function tripFormFunction(){
 
   }
