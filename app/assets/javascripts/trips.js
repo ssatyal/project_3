@@ -45,7 +45,7 @@
     "Trip",
     "$stateParams",
     "LocationFactory",
-    "$state",
+    "$window",
     showCtrlFunction
   ])
   // .controller("locationNewController", [
@@ -60,7 +60,7 @@
     tripFormDirectiveFunction
   ]);
 
-  function showCtrlFunction( Search, Trip, $stateParams, LocationFactory, $state ){
+  function showCtrlFunction( Search, Trip, $stateParams, LocationFactory, $window ){
     var showVM = this;
     showVM.trip = Trip.get({id: $stateParams.id});
     showVM.search = function() {
@@ -71,10 +71,8 @@
     };
     showVM.location = new LocationFactory();
     showVM.createLocation = function(trip_id, name, lat, long, place_id){
-      showVM.location.$save({trip_id: trip_id, name: name, lat: lat, long: long, place_id: place_id}).then(function(response){
-        console.log("saved location:", response)
-       $state.go("tripShow", {id: response.trip_id})
-     })
+      showVM.location.$save({trip_id: trip_id, name: name, lat: lat, long: long, place_id: place_id},
+      $window.location.reload());
     }
   };
 
