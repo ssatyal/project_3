@@ -31,9 +31,10 @@
   .controller( "tripEditCtrl", [
     "Trip",
     "$stateParams",
-    tripFormFunction
+    tripEditControllerFunction
   ])
   .controller( "tripShowCtrl", [
+    "SearchFactory",
     "Trip",
     "$stateParams",
     showCtrlFunction
@@ -43,9 +44,15 @@
     tripFormDirectiveFunction
   ]);
 
-  function showCtrlFunction( Trip, $stateParams ){
-    console.log($stateParams)
-    this.trip = Trip.get({id: $stateParams.id});
+  function showCtrlFunction( Search, Trip, $stateParams ){
+    var showVM = this;
+    showVM.trip = Trip.get({id: $stateParams.id});
+    showVM.search = function() {
+      showVM.places = Search.query({q:showVM.query}, function(results){
+        showVM.places = results;
+        console.log(results)
+      })
+    }
   };
 
   function indexControllerFunction( Search, Trip ){
@@ -129,5 +136,9 @@
   }
   function tripFormFunction(){
 
+  }
+
+  function tripEditControllerFunction( Trip, $stateParams ) {
+    this.trip = Trip.get({id: $stateParams.id});
   }
 })();

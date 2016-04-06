@@ -26,6 +26,11 @@ class TripsController < ApplicationController
     render json: @trip
   end
 
+  def update
+    @trip.update trip_params
+    render json: @trip
+  end
+
   private
   def trip_params
     params.permit(:name, :category)
