@@ -10,9 +10,8 @@
 </form>
 
 <!-- {{ indexVM.places[0][1].name }} -->
-
 <div ng-repeat="place in tripShowVM.places[0] track by $index">
   {{ place.name }}
   {{ place.vicinity }}
-  <!-- need to add a button that will run "create()" function -->
+  <button ng-click="tripShowVM.createLocation()">Save</button>
 </div>

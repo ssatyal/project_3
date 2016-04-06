@@ -1,6 +1,7 @@
 <h1> index file </h1>
 <div data-ng-repeat="trip in indexVM.trips">
-  <p>{{trip.name}}</p>
+  <p><a data-ui-sref="tripShow({id: trip.id})">{{trip.name}}</a></p>
+  <p>{{trip.id}}</p>
 </div>
 
 <form data-ng-submit="indexVM.search()">

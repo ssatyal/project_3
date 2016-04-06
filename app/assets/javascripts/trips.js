@@ -18,6 +18,10 @@
     "$resource",
     SearchFactory
   ])
+  .factory( "LocationFactory", [
+    "$resource",
+    LocationFactory
+  ])
   .controller("indexCtrl", [
     "SearchFactory",
     "Trip",
@@ -37,14 +41,21 @@
     "SearchFactory",
     "Trip",
     "$stateParams",
+    "LocationFactory",
     showCtrlFunction
   ])
+  // .controller("locationNewController", [
+  //   "Trip",
+  //   "$stateParams",
+  //   "LocationFactory",
+  //   locationNewControllerFunction
+  // ])
   .directive("tripForm",[
     "Trip",
     tripFormDirectiveFunction
   ]);
 
-  function showCtrlFunction( Search, Trip, $stateParams ){
+  function showCtrlFunction( Search, Trip, $stateParams, LocationFactory ){
     var showVM = this;
     showVM.trip = Trip.get({id: $stateParams.id});
     showVM.search = function() {
@@ -52,18 +63,22 @@
         showVM.places = results;
         console.log(results)
       })
+    };
+    showVM.location = new LocationFactory({trip_id: 3});
+    showVM.createLocation = function(){
+      showVM.location.$save();
     }
   };
 
   function indexControllerFunction( Search, Trip ){
     var indexVM = this;
     indexVM.trips = Trip.all;
-    indexVM.search = function() {
-      indexVM.places = Search.query({q:indexVM.query}, function(results){
-        indexVM.places = results;
-        console.log(results)
-      })
-    }
+    // indexVM.search = function() {
+    //   indexVM.places = Search.query({q:indexVM.query}, function(results){
+    //     indexVM.places = results;
+    //     console.log(results)
+    //   })
+    // }
   };
 
   function Trip( $resource ){
@@ -84,6 +99,16 @@
     Search.all = Search.query()
     return Search;
   };
+
+  function LocationFactory( $resource ){
+    var Location = $resource( "http://localhost:3000/trips/:trip_id/locations/:id", {trip_id: "@trip_id"}, {
+      update: {
+        method: "PUT"
+        // isArray: true
+      }
+    });
+    return Location;
+  }
 
   function RouterFunction($stateProvider){
     $stateProvider
@@ -139,6 +164,9 @@
       }
     }
   }
+  // function locationNewControllerFunction( Trip, $stateParams, LocationFactory ){
+  //
+  // }
   function tripFormFunction(){
 
   }
