@@ -10,6 +10,9 @@
     "$stateProvider",
     RouterFunction
   ])
+  .config(["$sceProvider", function($sceProvider){
+   $sceProvider.enabled(false);
+ }])
   .factory( "Trip", [
     "$resource",
     Trip
@@ -77,7 +80,10 @@
 
   function Trip( $resource ){
     var Trip = $resource( "http://localhost:3000/trips/:id.json", {}, {
-      update: { method: "PUT" }
+      update: {
+        method: "PUT",
+        isArray: true
+      },
     });
     Trip.all = Trip.query();
     return Trip;
