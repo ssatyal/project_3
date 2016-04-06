@@ -31,6 +31,12 @@ class TripsController < ApplicationController
     render json: @trip
   end
 
+  def destroy
+    @trip = Trip.find(params[:id])
+    @trip.destroy
+    render json: @trip
+  end
+
   private
   def trip_params
     params.permit(:name, :category)

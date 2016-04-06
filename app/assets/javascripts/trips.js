@@ -131,6 +131,11 @@
             console.log("Success")
           })
         }
+        scope.delete = function(){
+          Trip.delete({id: scope.trip.id}, scope.trip, function(response){
+            console.log("Success")
+          })
+        }
       }
     }
   }
