@@ -10,9 +10,9 @@
     "$stateProvider",
     RouterFunction
   ])
-  .factory( "TripFactory", [
+  .factory( "Trip", [
     "$resource",
-    TripFactory
+    Trip
   ])
   .factory( "SearchFactory", [
     "$resource",
@@ -20,18 +20,32 @@
   ])
   .controller("indexCtrl", [
     "SearchFactory",
-    "TripFactory",
+    "Trip",
     indexControllerFunction
   ])
-  .controller( "showCtrl", [
-    "SearchFactory",
-    "TripFactory",
+  .controller( "tripNewCtrl", [
+    "Trip",
     "$stateParams",
-    showStrlFunction
+    tripFormFunction
+  ])
+  .controller( "tripEditCtrl", [
+    "Trip",
+    "$stateParams",
+    tripFormFunction
+  ])
+  .controller( "tripShowCtrl", [
+    "Trip",
+    "$stateParams",
+    showCtrlFunction
+  ])
+  .directive("tripForm",[
+    "Trip",
+    tripFormDirectiveFunction
   ]);
 
-  function showStrlFunction( TripFactory, $stateParams ){
-  this.trip = TripFactory.get({id: $stateParams.id});
+  function showCtrlFunction( Trip, $stateParams ){
+    console.log($stateParams)
+    this.trip = Trip.get({id: $stateParams.id});
   };
 
   function indexControllerFunction( Search, Trip ){
@@ -45,7 +59,7 @@
     }
   };
 
-  function TripFactory( $resource ){
+  function Trip( $resource ){
     var Trip = $resource( "http://localhost:3000/trips/:id.json", {}, {
       update: { method: "PUT" }
     });
@@ -68,15 +82,52 @@
     $stateProvider
     .state("tripIndex", {
       url: "/trips",
-      templateUrl: "ng-views/trip.index.html",
+      templateUrl: "/ng-views/trip.index.html",
       controller: "indexCtrl",
       controllerAs: "indexVM"
     })
-    .state("show", {
+    .state("tripNew", {
+      url: "/trips/new",
+      templateUrl: "/ng-views/trip.new.html",
+      controller: "tripNewCtrl",
+      controllerAs: "tripNewVM"
+    })
+    .state("tripEdit", {
+      url: "/trips/:id/edit",
+      templateUrl: "/ng-views/trip.edit.html",
+      controller: "tripEditCtrl",
+      controllerAs: "tripEditVM"
+    })
+    .state("tripShow", {
       url: "/trips/:id",
-      templateUrl: "ng-views/trip.show.html",
-      controller: "showCtrl",
-      controllerAs: "showVM"
+      templateUrl: "/ng-views/trip.show.html",
+      controller: "tripShowCtrl",
+      controllerAs: "tripShowVM"
     })
   };
+  function tripFormDirectiveFunction(Trip){
+    return{
+      templateUrl: "/ng-views/_trip_form.html",
+      restrict: "C",
+      scope: {
+        trip: "=",
+        formType: "@",
+      },
+      link: function(scope){
+        scope.create = function(){
+          Trip.save(scope.trip, function(response){
+            Trip.all.push(response);
+          });
+        }
+        scope.update = function(){
+          Trip.update({id: scope.trip.id}, scope.trip, function(response){
+            console.log("Success")
+          })
+        }
+      }
+    }
+  }
+  function tripFormFunction(){
+
+  }
 })();

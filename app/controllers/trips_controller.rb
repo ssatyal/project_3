@@ -21,4 +21,14 @@ class TripsController < ApplicationController
     # @place_names = Place.place_details
   end
 
+  def create
+    @trip = Trip.create trip_params
+    render json: @trip
+  end
+
+  private
+  def trip_params
+    params.permit(:name, :category)
+  end
+
 end
