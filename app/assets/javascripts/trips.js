@@ -45,6 +45,7 @@
     "Trip",
     "$stateParams",
     "LocationFactory",
+    "$state",
     showCtrlFunction
   ])
   // .controller("locationNewController", [
@@ -55,10 +56,11 @@
   // ])
   .directive("tripForm",[
     "Trip",
+    "$state",
     tripFormDirectiveFunction
   ]);
 
-  function showCtrlFunction( Search, Trip, $stateParams, LocationFactory ){
+  function showCtrlFunction( Search, Trip, $stateParams, LocationFactory, $state ){
     var showVM = this;
     showVM.trip = Trip.get({id: $stateParams.id});
     showVM.search = function() {
@@ -69,7 +71,10 @@
     };
     showVM.location = new LocationFactory();
     showVM.createLocation = function(trip_id, name, lat, long, place_id){
-      showVM.location.$save({trip_id: trip_id, name: name, lat: lat, long: long, place_id: place_id});
+      showVM.location.$save({trip_id: trip_id, name: name, lat: lat, long: long, place_id: place_id}).then(function(response){
+        console.log("saved location:", response)
+       $state.go("tripShow", {id: response.trip_id})
+     })
     }
   };
 
@@ -137,7 +142,7 @@
       controllerAs: "tripShowVM"
     })
   };
-  function tripFormDirectiveFunction(Trip){
+  function tripFormDirectiveFunction(Trip, $state){
     return{
       templateUrl: "/ng-views/_trip_form.html",
       restrict: "C",
@@ -149,11 +154,12 @@
         scope.create = function(){
           Trip.save(scope.trip, function(response){
             Trip.all.push(response);
+            console.log("trip create success:", response);
+            $state.go("tripShow", {id: response.id});
           });
         }
         scope.update = function(){
           Trip.update({id: scope.trip.id}, scope.trip, function(response){
-            console.log("Success")
           })
         }
         scope.delete = function(){
