@@ -60,9 +60,12 @@
 
   function showCtrlFunction( Search, Trip, $stateParams, LocationFactory ){
     var showVM = this;
-    showVM.trip = Trip.get({id: $stateParams.id}).$promise.then(function(trip){
+    showVM.trip = Trip.get({id: $stateParams.id})
+    showVM.trip.$promise.then(function(trip){
       showVM.mapUrl = generateMapURL(trip.locations);
       // console.log(showVM.mapUrl);
+      // console.log("showVM trip assign:", trip)
+      // showVM.trip = trip;
     });
     showVM.search = function() {
       showVM.places = Search.query({q:showVM.query}, function(results){
@@ -72,6 +75,7 @@
     };
     showVM.location = new LocationFactory();
     showVM.createLocation = function(trip_id, name, lat, long, place_id){
+      console.log("create", trip_id)
       showVM.location.$save({trip_id: trip_id, name: name, lat: lat, long: long, place_id: place_id});
     }
   };
@@ -194,7 +198,7 @@
     }).join("")
     console.log("arg 3")
     console.log(middle)
-  
+
 	return string+="origin=place_id:"+first.place_id+middle+"&destination=place_id:"+last.place_id
   }
 })();

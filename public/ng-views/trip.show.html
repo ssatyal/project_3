@@ -1,12 +1,9 @@
 <h2>this is the show</h2>
-
-<p>{{tripShowVM.trip.id}}</p>
 <h2>{{tripShowVM.trip.name}}</h2>
-<div data-ng-repeat="place in tripShowVM.trip.locations">
-  <p>{{place.name}}</p>
-  <p>{{place.place_id}}</p>
 
-</div>
+<div data-ng-repeat="place in tripShowVM.trip.locations">
+   <p>{{place.name}}</p>
+ </div>
 
 <iframe
   width="600"
@@ -14,7 +11,7 @@
   frameborder="0" style="border:0"
   ng-src=
   {{tripShowVM.mapUrl}} allowfullscreen>
-  
+
 </iframe>
 
 <h2>add locations</h2>
